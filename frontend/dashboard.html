@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Horizon AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ÜST BAR -->
+  <div class="top-bar">
+    <div class="breadcrumb">Pages / Dashboard</div>
+    <div class="top-bar-right">
+      <div class="search-box">
+        <span class="material-icons">search</span>
+        <input type="text" placeholder="Search">
+      </div>
+      <span class="material-icons top-icon">lock</span>
+      <span class="material-icons top-icon">dark_mode</span>
+      <div class="user-dropdown">
+        <div class="avatar"><span class="material-icons">person</span></div>
+        <div class="dropdown-menu">
+          <a href="dashboard.html" class="menu-item logged-in">Dashboard</a>
+          <a href="#" class="menu-item logged-in">Profile Settings</a>
+          <a href="#" id="logout-link" class="menu-item logged-in">Log Out</a>
+          <a href="login.html" class="menu-item logged-out">Sign In</a>
+          <a href="register.html" class="menu-item logged-out">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT YAPI: Sidebar + İçerik -->
+  <div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>HORIZON AI</h2>
+      <ul class="sidebar-menu">
+        <li><a href="chat.html"><span class="material-icons">auto_awesome</span> Chat UI</a></li>
+        <li><a href="dashboard.html" class="active"><span class="material-icons">home</span> Dashboard</a></li>
+        <li><a href="#" class="disabled"><span class="material-icons">folder</span> My Projects <span class="pro-badge">PRO</span></a></li>
+        <li><a href="#" class="disabled"><span class="material-icons">apps</span> All Templates <span class="pro-badge">PRO</span></a></li>
+        <li class="section-title logged-out">Other Pages</li>
+        <ul>
+          <li class="logged-out"><a href="register.html">Register</a></li>
+          <li class="logged-out"><a href="login.html">Sign In</a></li>
+        </ul>
+        <li class="section-title"><span class="material-icons">lock</span> Admin Pages <span class="pro-badge">PRO</span></li>
+        <ul>
+          <li><a href="#" class="disabled">All Templates</a></li>
+          <li><a href="#" class="disabled">New Template</a></li>
+          <li><a href="#" class="disabled">Edit Template</a></li>
+          <li><a href="#" class="disabled">Users Overview</a></li>
+        </ul>
+      </ul>
+    </div>
+
+    <!-- İçerik -->
+    <div class="main-content">
+      <div class="dashboard-content">
+        <h2>Dashboard</h2>
+        <div class="cards">
+          <div class="card">
+            <span class="material-icons">chat</span>
+            <div>
+              <h3>120</h3>
+              <p>Chats Today</p>
+            </div>
+          </div>
+          <div class="card">
+            <span class="material-icons">people</span>
+            <div>
+              <h3>67</h3>
+              <p>Active Users</p>
+            </div>
+          </div>
+          <div class="card">
+            <span class="material-icons">folder</span>
+            <div>
+              <h3>8</h3>
+              <p>Projects</p>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h3>Recent Activity</h3>
+          <p>Here you can display recent user or system activities...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

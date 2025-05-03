@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat UI - Horizon AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Üst Bar -->
+  <div class="top-bar">
+    <div class="breadcrumb">Pages / Chat UI</div>
+    <div class="top-bar-right">
+      <div class="search-box">
+        <span class="material-icons">search</span>
+        <input type="text" placeholder="Search">
+      </div>
+      <span class="material-icons top-icon">lock</span>
+      <span class="material-icons top-icon">dark_mode</span>
+
+      <!-- Açılır menülü avatar -->
+      <div class="user-dropdown">
+        <div class="avatar"><span class="material-icons">person</span></div>
+        <div class="dropdown-menu">
+          <a href="dashboard.html" class="menu-item logged-in">Dashboard</a>
+          <a href="#" class="menu-item logged-in">Profile Settings</a>
+          <a href="#" id="logout-link" class="menu-item logged-in">Log Out</a>
+          <a href="login.html" class="menu-item logged-out">Sign In</a>
+          <a href="register.html" class="menu-item logged-out">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout: Sidebar + İçerik -->
+  <div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>HORIZON AI</h2>
+      <ul class="sidebar-menu">
+        <li><a href="chat.html" class="active"><span class="material-icons">auto_awesome</span> Chat UI</a></li>
+        <li><a href="dashboard.html"><span class="material-icons">home</span> Dashboard</a></li>
+        <li><a href="#" class="disabled"><span class="material-icons">folder</span> My Projects <span class="pro-badge">PRO</span></a></li>
+        <li><a href="#" class="disabled"><span class="material-icons">apps</span> All Templates <span class="pro-badge">PRO</span></a></li>
+        <li class="section-title logged-out">Other Pages</li>
+        <ul>
+          <li class="logged-out"><a href="register.html">Register</a></li>
+          <li class="logged-out"><a href="login.html">Sign In</a></li>
+        </ul>
+        <li class="section-title"><span class="material-icons">lock</span> Admin Pages <span class="pro-badge">PRO</span></li>
+        <ul>
+          <li><a href="#" class="disabled">All Templates</a></li>
+          <li><a href="#" class="disabled">New Template</a></li>
+          <li><a href="#" class="disabled">Edit Template</a></li>
+          <li><a href="#" class="disabled">Users Overview</a></li>
+        </ul>
+      </ul>
+    </div>
+
+    <!-- Ana içerik -->
+    <div class="main-content">
+      <!-- Model seçici ve not -->
+      <div class="model-switcher">
+        <button class="model-btn active">
+          <span class="material-icons">auto_awesome</span> GPT-4.0
+        </button>
+        <button class="model-btn">
+          <span class="material-icons">bolt</span> GPT-3.5
+        </button>
+        <span class="note">No plugins added</span>
+      </div>
+
+      <!-- Sohbet mesaj alanı -->
+      <div class="chat-area">
+        <div class="message user-message">
+          <div class="message-content">
+            Hello, can you help me with something?
+          </div>
+        </div>
+        <div class="message bot-message">
+          <div class="message-content">
+            Hello! Sure, I'd be happy to help. What do you need assistance with?
+          </div>
+        </div>
+      </div>
+
+      <!-- Mesaj giriş alanı -->
+      <div class="chat-input-area">
+        <input type="text" placeholder="Type your message here...">
+        <button class="btn primary-btn">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
