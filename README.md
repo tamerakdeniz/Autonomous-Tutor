@@ -1,105 +1,143 @@
 # Decentralized Tutor
 
-A FastAPI-based application that helps users learn and improve their code analysis skills through interactive exercises and AI-powered feedback.
+A decentralized AI-powered learning platform built with FastAPI that provides personalized code analysis and tutoring. The system uses Google's Gemini AI to analyze code, provide feedback, and adapt to each user's learning pace while maintaining a decentralized approach to education.
 
-## Features
+## 🌟 Key Features
 
-- User authentication and session management
-- Progressive learning system with difficulty levels (beginner, intermediate, advanced)
-- Different types of code analysis exercises:
-  - Incorrect code analysis (find the bugs)
-  - Correct code analysis (understand patterns and concepts)
-  - Multiple choice questions (coming soon)
-- AI-powered feedback using OpenAI's GPT models
-- Progress tracking and skill level adaptation
-- Hint system for when users need help
+- **Decentralized Learning System**
 
-## Setup
+  - Peer-to-peer knowledge sharing
+  - Distributed feedback mechanisms
+  - Community-driven content validation
 
-1. Create a virtual environment:
+- **AI-Powered Analysis**
+
+  - Real-time code analysis
+  - Personalized feedback generation
+  - Adaptive difficulty scaling
+  - Context-aware hint system
+
+- **User Experience**
+  - Secure authentication system
+  - Progress tracking and analytics
+  - Skill-based matchmaking
+  - Interactive learning sessions
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package manager)
+- Git
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/tamerakdeniz/Decentralized-Tutor.git
+cd Decentralized-Tutor
+```
+
+2. Create and activate virtual environment:
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Windows
+venv\Scripts\activate
+# Unix/MacOS
+source venv/bin/activate
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Set up environment variables:
-   Create a `.env` file in the root directory with:
+4. Configure environment variables:
+   Create a `.env` file in the root directory:
 
-```
+```env
 DATABASE_URL=sqlite:///./decentralized_tutor.db
-SECRET_KEY=your-secret-key-here
-OPENAI_API_KEY=your-openai-api-key
+SECRET_KEY=your-secure-secret-key
+GEMINI_API_KEY=your-gemini-api-key
 ```
 
-4. Run the application:
+5. Start the application:
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+Access the API at `http://localhost:8000/docs` for interactive documentation.
 
-## API Endpoints
+## 🔧 API Reference
 
 ### Authentication
 
-- `POST /api/register` - Register a new user
-- `POST /api/login` - Login and get access token
+| Endpoint        | Method | Description                |
+| --------------- | ------ | -------------------------- |
+| `/api/register` | POST   | Create new user account    |
+| `/api/login`    | POST   | Authenticate and get token |
+
+### Learning
+
+| Endpoint                 | Method | Description                |
+| ------------------------ | ------ | -------------------------- |
+| `/api/analysis/generate` | GET    | Get new coding challenge   |
+| `/api/analysis/submit`   | POST   | Submit solution for review |
+| `/api/analysis/hint`     | GET    | Request contextual hint    |
 
 ### User Management
 
-- `GET /api/users/me` - Get current user profile
-- `PATCH /api/users/me/skill-level` - Update skill level
-- `GET /api/users/me/history` - Get learning history
+| Endpoint              | Method | Description            |
+| --------------------- | ------ | ---------------------- |
+| `/api/users/me`       | GET    | Get user profile       |
+| `/api/users/progress` | GET    | View learning progress |
+| `/api/users/settings` | PATCH  | Update preferences     |
 
-### Code Analysis
-
-- `GET /api/analysis/generate-question` - Get a new question
-- `POST /api/analysis/submit-answer` - Submit and evaluate an answer
-- `GET /api/analysis/hint` - Get a hint for the current question
-
-## Development
-
-### Running Tests
-
-```bash
-pytest tests/
-```
-
-### Project Structure
+## 📁 Project Structure
 
 ```
 app/
-├── main.py           # FastAPI application entry point
-├── database/         # Database configurations
-├── models/          # SQLAlchemy models
-├── routers/         # API route handlers
-└── utils/           # Utility functions
-    ├── code_analyzer.py     # Code analysis logic
-    └── feedback_generator.py # AI feedback generation
+├── main.py                 # Application entry point
+├── database/              # Database configuration
+│   └── database.py        # SQLAlchemy setup
+├── models/               # Data models
+│   ├── user.py           # User model
+│   └── code_analysis.py  # Analysis model
+├── routers/              # API endpoints
+│   ├── auth.py          # Authentication routes
+│   ├── users.py         # User management
+│   └── code_analysis.py # Analysis routes
+└── utils/               # Utility functions
+    ├── code_analyzer.py # Code analysis engine
+    └── feedback_generator.py # AI feedback system
 ```
 
-## Technologies Used
+## 🛠️ Technologies
 
-- FastAPI - Web framework
-- SQLAlchemy - Database ORM
-- OpenAI GPT - AI feedback generation
-- PyJWT - Authentication
-- Pytest - Testing
+- **Backend Framework:** FastAPI
+- **Database:** SQLAlchemy with SQLite
+- **AI Integration:** Google Gemini
+- **Authentication:** JWT tokens
+- **Testing:** Pytest
 
-## Contributing
+## 🤝 Contributing
 
-This project was created during the Academy of Artificial Intelligence and Technology hackathon (appjam). Feel free to contribute by:
+We welcome contributions! This project was created during the Academy of Artificial Intelligence and Technology hackathon (appjam).
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 🙏 Acknowledgments
+
+- Academy of Artificial Intelligence and Technology
+- Google for Gemini AI capabilities
+- FastAPI community
+- All contributors and participants of the hackathon
