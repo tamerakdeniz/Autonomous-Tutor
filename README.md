@@ -62,8 +62,15 @@ pip install -r requirements.txt
 ```env
 DATABASE_URL=sqlite:///./decentralized_tutor.db
 SECRET_KEY=your-secure-secret-key
-GEMINI_API_KEY=your-gemini-api-key
+GEMINI_API_KEY=your-gemini-api-key  # Get this from Google AI Studio (https://makersuite.google.com/app/apikey)
 ```
+
+To obtain your Gemini API key:
+
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create or sign in to your Google account
+3. Create a new API key
+4. Copy the API key and paste it in your `.env` file
 
 5. Start the application:
 
