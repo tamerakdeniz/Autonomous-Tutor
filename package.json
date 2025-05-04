@@ -1,5 +1,12 @@
 {
   "devDependencies": {
-    "@types/node": "^22.15.3"
+    "@types/node": "^22.15.3",
+    "concurrently": "^8.0.1"
+  },
+  "dependencies": {
+    "next": "^15.3.1"
+  },
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter frontend dev\" \"python -m uvicorn app.main:app --reload\""
   }
 }
