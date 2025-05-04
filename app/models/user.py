@@ -1,7 +1,10 @@
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import relationship
 from datetime import datetime
+
+from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy.orm import relationship
+
 from app.database.database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -16,3 +19,6 @@ class User(Base):
     
     # Relationship with CodeAnalysisSessions
     analysis_sessions = relationship("CodeAnalysisSession", back_populates="user")
+    
+    # Relationship with Chat
+    chats = relationship("Chat", back_populates="user")

@@ -182,3 +182,36 @@ async def get_hint(
     )
     
     return {"hint": hint}
+
+from datetime import datetime
+
+from pydantic import BaseModel
+
+from app.models.chat import Chat
+
+
+class ChatMessage(BaseModel):
+    message: str
+
+@router.post("/chat")
+def chat_with_ai(chat_message: ChatMessage, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Simulate AI response (replace with actual AI logic)
+    ai_response = f"AI Response to: {chat_message.message}"
+
+    # Save chat to database
+    new_chat = Chat(
+        user_id=user.id,
+        message=chat_message.message,
+        response=ai_response,
+        timestamp=datetime.utcnow()
+    )
+    db.add(new_chat)
+    db.commit()
+    db.refresh(new_chat)
+
+    return {"message": chat_message.message, "response": ai_response}
+
+@router.get("/chats")
+def get_user_chats(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    chats = db.query(Chat).filter(Chat.user_id == user.id).order_by(Chat.timestamp.desc()).all()
+    return chats

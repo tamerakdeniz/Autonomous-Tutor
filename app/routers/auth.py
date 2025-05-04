@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
@@ -20,6 +21,15 @@ settings = get_settings()
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+class UserCreate(BaseModel):
+    email: str
+    username: str
+    password: str
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -103,3 +113,19 @@ async def login(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.post("/signup")
+def sign_up(user: UserCreate, db: Session = Depends(get_db)):
+    hashed_password = pwd_context.hash(user.password)
+    db_user = User(email=user.email, username=user.username, hashed_password=hashed_password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return {"message": "User created successfully"}
+
+@router.post("/signin")
+def sign_in(user: UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == user.username).first()
+    if not db_user or not pwd_context.verify(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Invalid username or password")
+    return {"message": "Sign-in successful"}
