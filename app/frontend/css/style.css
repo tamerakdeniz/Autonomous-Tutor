@@ -1,0 +1,127 @@
+#chat {
+  background-color: #ffffff;
+  border-top: 1px solid #dee2e6;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 60%;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.message.user {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  text-align: left;
+}
+
+.message.bot {
+  background-color: #e9ecef;
+  color: #333;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.message.bot p,
+.message.bot ol,
+.message.bot ul,
+.message.bot li,
+.message.bot blockquote {
+  color: #333;
+}
+
+.code-container {
+  position: relative;
+  margin-top: 10px;
+}
+
+.code-container pre {
+  background-color: #212529;
+  padding: 12px 20px 12px 40px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.code-container pre code {
+  color: #00ff7f;
+}
+
+.code-container pre code span {
+  display: block;
+  counter-increment: linenumber;
+}
+
+.code-container pre code span::before {
+  content: counter(linenumber);
+  display: inline-block;
+  width: 30px;
+  margin-left: -40px;
+  color: #555;
+}
+
+.code-container .copy-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #444;
+  color: #ddd;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  z-index: 5;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.code-container .copy-button:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+
+.code-container .copy-button.copied::after {
+  content: 'Copied!';
+  position: absolute;
+  top: -25px;
+  right: 0;
+  background-color: #333;
+  color: #00ff7f;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-size: 10px;
+  opacity: 0;
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.code-container.highlight pre {
+  background-color: #2a3439;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body class="container mt-5">
+    <h2>Register</h2>
+    <input
+      type="text"
+      id="username"
+      class="form-control"
+      placeholder="Username"
+    /><br />
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      placeholder="Password"
+    /><br />
+    <button onclick="register()" class="btn btn-primary">Register</button>
+    <p><a href="login.html">Already have an account? Login here</a></p>
+
+    <script>
+      function register() {
+        fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            alert(data.message);
+            if (!data.message.includes('already')) {
+              window.location = 'login.html';
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
