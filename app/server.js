@@ -1,10 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const axios = require('axios');
-const bcrypt = require('bcryptjs');
-const path = require('path');
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+import fs from 'fs';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;

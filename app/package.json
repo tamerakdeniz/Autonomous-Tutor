@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "AI Powered Coding Learning Assistant",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.9.0",
@@ -13,5 +18,11 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "marked": "^15.0.11"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5"
   }
 }

@@ -13,8 +13,9 @@ An AI-powered learning platform designed to help beginner and intermediate progr
 
 ## 🔧 Technology Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript
-- **Backend**: Node.js, Express.js
+- **Frontend**: HTML5, CSS3, Modern JavaScript (ES Modules)
+- **Development Tools**: Vite, ESLint
+- **Backend**: Node.js, Express.js (ES Modules)
 - **AI Integration**: Google Gemini API
 - **Authentication**: bcryptjs
 - **Database**: Local JSON file storage
@@ -25,8 +26,8 @@ An AI-powered learning platform designed to help beginner and intermediate progr
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (v14.0.0 or higher)
-- npm (v6.0.0 or higher)
+- Node.js (v16.0.0 or higher)
+- npm (v7.0.0 or higher)
 
 ## 🚀 Installation
 
@@ -37,15 +38,15 @@ git clone https://github.com/tamerakdeniz/Decentralized-Tutor.git
 cd Decentralized-Tutor/app
 ```
 
-2. Install dependencies:
+2. Install dependencies and development tools:
 
 ```bash
 npm install
 ```
 
-3. Set up your Gemini API key using either method:
+3. Set up your Gemini API key:
 
-   Option A: Using .env file
+   Option A: Using .env file (Recommended)
 
    - Create a `.env` file in the root directory and add:
 
@@ -55,24 +56,27 @@ npm install
 
    Option B: Direct configuration in server.js
 
-   - Open `server.js` and add your API key:
+   - Open `server.js` and update the API key:
 
    ```javascript
    const GEMINI_API_KEY = 'your_api_key_here';
-   const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
    ```
 
 4. Start the application:
 
-```bash
-npm start
-```
+   Development mode with hot-reload:
 
-5. Open your browser and navigate to:
+   ```bash
+   npm run dev
+   ```
 
-```
-http://localhost:3000
-```
+   Production mode:
+
+   ```bash
+   npm start
+   ```
+
+The application will be available at `http://localhost:3000`
 
 ## 📁 Project Structure
 
@@ -86,6 +90,7 @@ app/
 │   │   ├── chat.js
 │   │   ├── dashboard.js
 │   │   ├── login.js
+│   │   ├── main.js
 │   │   ├── particles.js
 │   │   ├── register.js
 │   │   └── translations.js
@@ -96,9 +101,11 @@ app/
 │   ├── dashboard.html
 │   ├── index.html
 │   ├── login.html
-│   └── register.html
+│   ├── register.html
+│   └── vite.config.js
 ├── db.json
 ├── package.json
+├── .eslintrc.json
 └── server.js
 ```
 
@@ -175,9 +182,16 @@ graph TD
 - `POST /api/login`: User authentication
 - `POST /api/chat`: AI interaction endpoint
 
-## 💡 Environment Variables
+## 🛠️ Development and Environment
 
-Required environment variables:
+### Development Features
+
+- **Hot Module Replacement**: Real-time updates during development
+- **ESLint Integration**: Code quality and consistency checks
+- **Modern JavaScript**: ES Modules for better code organization
+- **Vite Build System**: Fast development and optimized production builds
+
+### Environment Variables
 
 ```env
 PORT=3000 (default)
