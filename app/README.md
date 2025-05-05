@@ -43,11 +43,24 @@ cd Decentralized-Tutor/app
 npm install
 ```
 
-3. Create a `.env` file in the root directory and add your Gemini API key:
+3. Set up your Gemini API key using either method:
 
-```env
-GEMINI_API_KEY=your_api_key_here
-```
+   Option A: Using .env file
+
+   - Create a `.env` file in the root directory and add:
+
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
+   Option B: Direct configuration in server.js
+
+   - Open `server.js` and add your API key:
+
+   ```javascript
+   const GEMINI_API_KEY = 'your_api_key_here';
+   const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+   ```
 
 4. Start the application:
 
