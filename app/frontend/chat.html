@@ -94,10 +94,6 @@
             modeText = `Correct Code Analysis (${selectedLanguage})`;
             modeIcon = 'fa-check-circle';
             break;
-          case 'multiple-choice':
-            modeText = 'Multiple Choice';
-            modeIcon = 'fa-question-circle';
-            break;
           default:
             modeText = 'General Chat';
             modeIcon = 'fa-comments';
@@ -119,10 +115,6 @@
             break;
           case 'correct-code':
             initialMessage = `I want to understand why certain ${language} code works correctly. Can you provide a code example and explain the best practices it demonstrates?`;
-            break;
-          case 'multiple-choice':
-            initialMessage =
-              "I'd like to test my conceptual understanding with some multiple choice questions about programming concepts.";
             break;
           default:
             initialMessage =
@@ -196,6 +188,15 @@
         } else {
           messageDiv.innerText = text;
         }
+
+        // Add click handler to copy message text to input field
+        messageDiv.style.cursor = 'pointer';
+        messageDiv.title = 'Click to copy this message';
+        messageDiv.addEventListener('click', function () {
+          const input = document.getElementById('message');
+          input.value = text;
+          input.focus();
+        });
 
         document.getElementById('chat').appendChild(messageDiv);
         document.getElementById('chat').scrollTop =

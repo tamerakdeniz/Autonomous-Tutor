@@ -737,6 +737,40 @@ body {
   padding: 10px 15px;
 }
 
+/* Language selector styling */
+.language-selector select {
+  background-color: var(--light-bg);
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  padding: 8px 30px 8px 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300c2ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.language-selector select:hover {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 10px rgba(0, 194, 255, 0.2);
+}
+
+.language-selector select:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 15px rgba(0, 194, 255, 0.3);
+}
+
+.language-selector select option {
+  background-color: var(--medium-bg);
+  color: var(--text-color);
+  padding: 8px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-title {
