@@ -10,43 +10,28 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Gemini API Key
-const GEMINI_API_KEY = 'AIzaSyCYRVJDzwkKee0YhKfVeUgAVi7It7UvQa4'; // DEMO
+const GEMINI_API_KEY = 'AIzaSyCYRVJDzwkKee0YhKfVeUgAVi7It7UvQa4';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Load DB
 const dbPath = './db.json';
-let users = [];
-try {
-  if (fs.existsSync(dbPath)) {
-    users = JSON.parse(fs.readFileSync(dbPath));
-  }
-} catch (error) {
-  console.error('Failed to read DB file:', error);
-  users = [];
-}
+let users = fs.existsSync(dbPath) ? JSON.parse(fs.readFileSync(dbPath)) : [];
 
-// Serve main page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
-// Register
 app.post('/api/register', async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ message: 'Username and password are required.' });
-  }
+  if (!username || !password)
+    return res.status(400).json({ message: 'Username and password required.' });
 
-  if (users.find(u => u.username === username)) {
+  if (users.find(u => u.username === username))
     return res.status(400).json({ message: 'Username already exists.' });
-  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
   users.push({ username, password: hashedPassword });
@@ -55,76 +40,67 @@ app.post('/api/register', async (req, res) => {
   res.json({ message: 'User registered successfully.' });
 });
 
-// Login
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-
   const user = users.find(u => u.username === username);
-  if (!user) {
-    return res.status(400).json({ message: 'Invalid credentials.' });
-  }
+  if (!user) return res.status(400).json({ message: 'Invalid credentials.' });
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  if (!isMatch)
     return res.status(400).json({ message: 'Invalid credentials.' });
-  }
 
   res.json({ message: 'Login successful.' });
 });
 
-// Chat
 app.post('/api/chat', async (req, res) => {
-  const { username, message, mode } = req.body;
+  const { username, message, mode, language } = req.body;
 
-  if (!users.find(u => u.username === username)) {
+  if (!users.find(u => u.username === username))
     return res.status(401).json({ message: 'Unauthorized.' });
-  }
 
-  if (!message || !mode) {
-    return res
-      .status(400)
-      .json({
-        message:
-          'Invalid chat request. Please select a mode and enter a message.'
-      });
-  }
-
-  let systemPrompt = 'You are a helpful programming tutor.';
+  let userPrompt = '';
   if (mode === 'wrong-code') {
-    systemPrompt =
-      'You are a tutor who provides buggy code and explains the mistakes.';
+    if (
+      message.includes('found') ||
+      message.toLowerCase().includes('bug') ||
+      message.toLowerCase().includes('error')
+    ) {
+      userPrompt = `Please provide concise feedback on this ${language} code analysis: ${message}. Keep the response focused and brief.`;
+    } else {
+      userPrompt = `Provide a ${language} code snippet with bugs and ask to find the issues. Keep the explanation brief and focused. ${message}`;
+    }
+  } else if (mode === 'correct-code') {
+    if (
+      message.toLowerCase().includes('because') ||
+      message.toLowerCase().includes('reason')
+    ) {
+      userPrompt = `Provide brief, focused feedback on this ${language} code explanation: ${message}. Keep the response concise.`;
+    } else {
+      userPrompt = `Provide a correct ${language} code example and briefly explain why it follows best practices. ${message}`;
+    }
+  } else {
+    userPrompt = message;
   }
-  if (mode === 'correct-code') {
-    systemPrompt =
-      'You are a tutor who provides correct code and explains why it works.';
-  }
-  if (mode === 'multiple-choice') {
-    systemPrompt =
-      'You are a tutor who asks programming multiple-choice questions and explains the answers.';
-  }
-
-  const mergedPrompt = `${systemPrompt}\n\nUser: ${message}`;
-
-  const prompt = {
-    contents: [{ role: 'user', parts: [{ text: mergedPrompt }] }]
-  };
 
   try {
-    const geminiRes = await axios.post(GEMINI_URL, prompt);
+    const response = await axios.post(GEMINI_URL, {
+      contents: [{ role: 'user', parts: [{ text: userPrompt }] }]
+    });
+
     const botResponse =
-      geminiRes.data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      response.data.candidates?.[0]?.content?.parts?.[0]?.text ||
       'No response generated.';
     res.json({ response: botResponse });
   } catch (err) {
-    console.error('Gemini API error:', err.response?.data || err.message);
-    res
-      .status(500)
-      .json({ message: 'Error connecting to AI.', error: err.message });
+    console.error('AI API Error:', err.message);
+    res.status(500).json({
+      message: 'Error connecting to AI.',
+      error: err.message
+    });
   }
 });
 
-// Catch-all route (for SPA support and Express 5 compatibility)
-app.use((req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 

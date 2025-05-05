@@ -13,7 +13,7 @@
 body {
   background-color: var(--dark-bg);
   color: var(--text-color);
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   transition: all 0.3s ease;
@@ -23,13 +23,15 @@ body {
 /* Neon text effect */
 .neon-text {
   color: var(--primary-color);
-  text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+  text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color),
+    0 0 20px var(--primary-color);
   letter-spacing: 1px;
 }
 
 .neon-text-alt {
   color: var(--secondary-color);
-  text-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+  text-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color),
+    0 0 20px var(--secondary-color);
   letter-spacing: 1px;
 }
 
@@ -60,7 +62,7 @@ body {
 }
 
 .cyber-navbar .nav-link:hover::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -119,7 +121,7 @@ body {
 
 .cyber-btn::before {
   background: var(--primary-color);
-  content: "";
+  content: '';
   height: 100%;
   left: -100%;
   position: absolute;
@@ -217,7 +219,7 @@ body {
   border-left: 12px solid var(--primary-color);
   border-top: 12px solid transparent;
   border-bottom: 12px solid transparent;
-  content: "";
+  content: '';
   position: absolute;
   right: -12px;
   top: 15px;
@@ -235,7 +237,7 @@ body {
   border-right: 12px solid var(--light-bg);
   border-top: 12px solid transparent;
   border-bottom: 12px solid transparent;
-  content: "";
+  content: '';
   left: -12px;
   position: absolute;
   top: 15px;
@@ -285,7 +287,7 @@ body {
   background-color: #0a0a0a;
   border-left: 3px solid var(--success-color);
   border-radius: 6px;
-  font-family: "Fira Code", monospace;
+  font-family: 'Fira Code', monospace;
   font-size: 14px;
   line-height: 1.5;
   margin: 0;
@@ -343,7 +345,7 @@ body {
   border: 1px solid var(--success-color);
   border-radius: 3px;
   color: var(--success-color);
-  content: "Copied!";
+  content: 'Copied!';
   font-size: 10px;
   opacity: 0;
   padding: 3px 7px;
@@ -393,8 +395,12 @@ body {
 }
 
 .learning-mode::before {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  content: "";
+  background: linear-gradient(
+    45deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  content: '';
   height: 5px;
   left: 0;
   position: absolute;
@@ -512,8 +518,12 @@ body {
 }
 
 .hero-section::before {
-  background: radial-gradient(circle, rgba(0, 194, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-  content: "";
+  background: radial-gradient(
+    circle,
+    rgba(0, 194, 255, 0.1) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  content: '';
   height: 100%;
   left: 0;
   position: absolute;

@@ -1,216 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Decentralized Tutor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <nav class="navbar cyber-navbar">
-    <div class="container">
-      <a class="navbar-brand neon-text" href="#">Decentralized Tutor</a>
-      <div class="d-flex align-items-center">
-        <span class="mr-3" id="username-display"></span>
-        <button class="cyber-btn cyber-btn-alt" onclick="logout()">
-          <i class="fas fa-sign-out-alt mr-2"></i>Logout
-        </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Decentralized Tutor</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar cyber-navbar">
+      <div class="container">
+        <a class="navbar-brand neon-text" href="#">Decentralized Tutor</a>
+        <div class="d-flex align-items-center">
+          <div class="language-selector mr-3">
+            <select
+              id="language-select"
+              class="cyber-form"
+              onchange="changeLanguage()"
+            >
+              <option value="Python">Python</option>
+              <option value="Java">Java</option>
+              <option value="C#">C#</option>
+              <option value="C++">C++</option>
+            </select>
+          </div>
+          <span class="mr-3" id="username-display"></span>
+          <button class="cyber-btn cyber-btn-alt" onclick="logout()">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+          </button>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="dashboard-header">
-    <div class="container d-flex justify-content-between align-items-center">
-      <h2 class="dashboard-title">Learning Dashboard</h2>
-      <div class="dashboard-stats">
-        <div class="stat-card">
-          <div class="stat-value" id="sessions-count">0</div>
-          <div class="stat-label">Sessions</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="problems-count">0</div>
-          <div class="stat-label">Problems</div>
+    <div class="dashboard-header">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h2 class="dashboard-title">Learning Dashboard</h2>
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-value" id="sessions-count">0</div>
+            <div class="stat-label">Sessions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="problems-count">0</div>
+            <div class="stat-label">Problems</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container py-5">
-    <h3 class="neon-text mb-4">Choose a Learning Mode</h3>
-    
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="learning-mode" onclick="startLearningMode('wrong-code')">
-          <div class="mode-icon">
-            <i class="fas fa-bug"></i>
+    <div class="container py-5">
+      <h3 class="neon-text mb-4">Choose a Learning Mode</h3>
+
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="learning-mode" onclick="startLearningMode('wrong-code')">
+            <div class="mode-icon">
+              <i class="fas fa-bug"></i>
+            </div>
+            <h4 class="mode-title">Wrong Code Analysis</h4>
+            <p class="mode-description">
+              Find and fix errors in code snippets with AI guidance.
+            </p>
           </div>
-          <h4 class="mode-title">Wrong Code Analysis</h4>
-          <p class="mode-description">Find and fix errors in code snippets with AI guidance.</p>
+        </div>
+
+        <div class="col-md-6 mb-4">
+          <div
+            class="learning-mode"
+            onclick="startLearningMode('correct-code')"
+          >
+            <div class="mode-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h4 class="mode-title">Correct Code Analysis</h4>
+            <p class="mode-description">
+              Understand why code works correctly and learn best practices.
+            </p>
+          </div>
         </div>
       </div>
-      
-      <div class="col-md-4 mb-4">
-        <div class="learning-mode" onclick="startLearningMode('correct-code')">
-          <div class="mode-icon">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <h4 class="mode-title">Correct Code Analysis</h4>
-          <p class="mode-description">Understand why code works correctly and learn best practices.</p>
-        </div>
-      </div>
-      
-      <div class="col-md-4 mb-4">
-        <div class="learning-mode" onclick="startLearningMode('multiple-choice')">
-          <div class="mode-icon">
-            <i class="fas fa-question-circle"></i>
-          </div>
-          <h4 class="mode-title">Multiple Choice</h4>
-          <p class="mode-description">Test your conceptual understanding with interactive quizzes.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <div class="cyber-card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Recent Activity</h4>
-            <button class="cyber-btn" onclick="clearActivity()">Clear</button>
-          </div>
-          <div class="card-body">
-            <div id="activity-log" class="activity-log">
-              <p class="text-center">No recent activity</p>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="cyber-card">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h4 class="mb-0">Recent Activity</h4>
+              <button class="cyber-btn" onclick="clearActivity()">Clear</button>
+            </div>
+            <div class="card-body">
+              <div id="activity-log" class="activity-log">
+                <p class="text-center">No recent activity</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="js/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Check if user is logged in
-      const username = localStorage.getItem('username');
-      if (!username) {
-        window.location = 'login.html';
-        return;
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Check if user is logged in
+        const username = localStorage.getItem('username');
+        if (!username) {
+          window.location = 'login.html';
+          return;
+        }
+
+        // Display username
+        document.getElementById(
+          'username-display'
+        ).textContent = `Welcome, ${username}!`;
+
+        // Set selected language
+        const selectedLang =
+          localStorage.getItem('selectedLanguage') || 'Python';
+        document.getElementById('language-select').value = selectedLang;
+
+        // Load user stats
+        loadUserStats();
+
+        // Load activity log
+        loadActivityLog();
+      });
+
+      function changeLanguage() {
+        const selectedLang = document.getElementById('language-select').value;
+        localStorage.setItem('selectedLanguage', selectedLang);
       }
-      
-      // Display username
-      document.getElementById('username-display').textContent = `Welcome, ${username}!`;
-      
-      // Load user stats
-      loadUserStats();
-      
-      // Load activity log
-      loadActivityLog();
-    });
-    
-    function loadUserStats() {
-      // In a real app, you would fetch this from the server
-      // For demo purposes, we'll use localStorage
-      const sessions = localStorage.getItem('sessions') || 0;
-      const problems = localStorage.getItem('problems') || 0;
-      
-      document.getElementById('sessions-count').textContent = sessions;
-      document.getElementById('problems-count').textContent = problems;
-    }
-    
-    function loadActivityLog() {
-      const activityLog = JSON.parse(localStorage.getItem('activityLog')) || [];
-      const activityLogElement = document.getElementById('activity-log');
-      
-      if (activityLog.length === 0) {
-        activityLogElement.innerHTML = '<p class="text-center">No recent activity</p>';
-        return;
+
+      function loadUserStats() {
+        // In a real app, you would fetch this from the server
+        // For demo purposes, we'll use localStorage
+        const sessions = localStorage.getItem('sessions') || 0;
+        const problems = localStorage.getItem('problems') || 0;
+
+        document.getElementById('sessions-count').textContent = sessions;
+        document.getElementById('problems-count').textContent = problems;
       }
-      
-      activityLogElement.innerHTML = '';
-      
-      activityLog.forEach(activity => {
-        const activityItem = document.createElement('div');
-        activityItem.className = 'activity-item';
-        activityItem.innerHTML = `
+
+      function loadActivityLog() {
+        const activityLog =
+          JSON.parse(localStorage.getItem('activityLog')) || [];
+        const activityLogElement = document.getElementById('activity-log');
+
+        if (activityLog.length === 0) {
+          activityLogElement.innerHTML =
+            '<p class="text-center">No recent activity</p>';
+          return;
+        }
+
+        activityLogElement.innerHTML = '';
+
+        activityLog.forEach(activity => {
+          const activityItem = document.createElement('div');
+          activityItem.className = 'activity-item';
+          activityItem.innerHTML = `
           <div class="activity-time">${activity.time}</div>
           <div class="activity-description">
             <i class="fas ${activity.icon} mr-2"></i>
             ${activity.description}
           </div>
         `;
-        activityLogElement.appendChild(activityItem);
-      });
-    }
-    
-    function startLearningMode(mode) {
-      // Store the selected mode
-      localStorage.setItem('learningMode', mode);
-      
-      // Update stats
-      const sessions = parseInt(localStorage.getItem('sessions') || 0) + 1;
-      localStorage.setItem('sessions', sessions);
-      
-      // Add to activity log
-      addActivity(mode);
-      
-      // Redirect to chat
-      window.location = 'chat.html';
-    }
-    
-    function addActivity(mode) {
-      const activityLog = JSON.parse(localStorage.getItem('activityLog')) || [];
-      
-      let icon, description;
-      switch(mode) {
-        case 'wrong-code':
-          icon = 'fa-bug';
-          description = 'Started a Wrong Code Analysis session';
-          break;
-        case 'correct-code':
-          icon = 'fa-check-circle';
-          description = 'Started a Correct Code Analysis session';
-          break;
-        case 'multiple-choice':
-          icon = 'fa-question-circle';
-          description = 'Started a Multiple Choice session';
-          break;
-        default:
-          icon = 'fa-code';
-          description = 'Started a learning session';
+          activityLogElement.appendChild(activityItem);
+        });
       }
-      
-      const now = new Date();
-      const time = now.toLocaleTimeString() + ' ' + now.toLocaleDateString();
-      
-      activityLog.unshift({
-        time,
-        icon,
-        description
-      });
-      
-      // Keep only the last 10 activities
-      if (activityLog.length > 10) {
-        activityLog.pop();
+
+      function startLearningMode(mode) {
+        // Store the selected mode
+        localStorage.setItem('learningMode', mode);
+
+        // Update stats
+        const sessions = parseInt(localStorage.getItem('sessions') || 0) + 1;
+        localStorage.setItem('sessions', sessions);
+
+        // Add to activity log
+        addActivity(mode);
+
+        // Redirect to chat
+        window.location = 'chat.html';
       }
-      
-      localStorage.setItem('activityLog', JSON.stringify(activityLog));
-    }
-    
-    function clearActivity() {
-      localStorage.removeItem('activityLog');
-      document.getElementById('activity-log').innerHTML = '<p class="text-center">No recent activity</p>';
-    }
-    
-    function logout() {
-      localStorage.removeItem('username');
-      window.location = 'login.html';
-    }
-  </script>
-</body>
+
+      function addActivity(mode) {
+        const activityLog =
+          JSON.parse(localStorage.getItem('activityLog')) || [];
+
+        let icon, description;
+        switch (mode) {
+          case 'wrong-code':
+            icon = 'fa-bug';
+            description = 'Started a Wrong Code Analysis session';
+            break;
+          case 'correct-code':
+            icon = 'fa-check-circle';
+            description = 'Started a Correct Code Analysis session';
+            break;
+          default:
+            icon = 'fa-code';
+            description = 'Started a learning session';
+        }
+
+        const now = new Date();
+        const time = now.toLocaleTimeString() + ' ' + now.toLocaleDateString();
+
+        activityLog.unshift({
+          time,
+          icon,
+          description
+        });
+
+        // Keep only the last 10 activities
+        if (activityLog.length > 10) {
+          activityLog.pop();
+        }
+
+        localStorage.setItem('activityLog', JSON.stringify(activityLog));
+      }
+
+      function clearActivity() {
+        localStorage.removeItem('activityLog');
+        document.getElementById('activity-log').innerHTML =
+          '<p class="text-center">No recent activity</p>';
+      }
+
+      function logout() {
+        localStorage.removeItem('username');
+        window.location = 'login.html';
+      }
+    </script>
+  </body>
 </html>

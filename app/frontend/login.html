@@ -18,7 +18,7 @@
             <h2 class="neon-text mb-0">Login</h2>
           </div>
           <div class="card-body">
-            <form class="cyber-form">
+            <form class="cyber-form" onsubmit="login(event)">
               <div class="form-group">
                 <label for="username"><i class="fas fa-user mr-2"></i>Username</label>
                 <input type="text" id="username" class="form-control" placeholder="Enter your username">
@@ -28,7 +28,7 @@
                 <input type="password" id="password" class="form-control" placeholder="Enter your password">
               </div>
               <div class="text-center mt-4">
-                <button type="button" onclick="login()" class="cyber-btn w-100">
+                <button type="submit" class="cyber-btn w-100">
                   <i class="fas fa-sign-in-alt mr-2"></i>Login
                 </button>
               </div>
@@ -51,7 +51,11 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script src="js/app.js"></script>
   <script>
-    function login() {
+    function login(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       
