@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Decentralized Tutor</title>
+    <title>Dashboard - Autonomous Tutor</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
@@ -21,7 +21,7 @@
   <body>
     <nav class="navbar cyber-navbar">
       <div class="container">
-        <a class="navbar-brand neon-text" href="#">Decentralized Tutor</a>
+        <a class="navbar-brand neon-text" href="#">Autonomous Tutor</a>
         <div class="d-flex align-items-center">
           <div class="language-selector mr-3">
             <select
@@ -114,135 +114,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        // Check if user is logged in
-        const username = localStorage.getItem('username');
-        if (!username) {
-          window.location = 'login.html';
-          return;
-        }
-
-        // Display username
-        document.getElementById(
-          'username-display'
-        ).textContent = `Welcome, ${username}!`;
-
-        // Set selected language
-        const selectedLang =
-          localStorage.getItem('selectedLanguage') || 'Python';
-        document.getElementById('language-select').value = selectedLang;
-
-        // Load user stats
-        loadUserStats();
-
-        // Load activity log
-        loadActivityLog();
-      });
-
-      function changeLanguage() {
-        const selectedLang = document.getElementById('language-select').value;
-        localStorage.setItem('selectedLanguage', selectedLang);
-      }
-
-      function loadUserStats() {
-        // In a real app, you would fetch this from the server
-        // For demo purposes, we'll use localStorage
-        const sessions = localStorage.getItem('sessions') || 0;
-        const problems = localStorage.getItem('problems') || 0;
-
-        document.getElementById('sessions-count').textContent = sessions;
-        document.getElementById('problems-count').textContent = problems;
-      }
-
-      function loadActivityLog() {
-        const activityLog =
-          JSON.parse(localStorage.getItem('activityLog')) || [];
-        const activityLogElement = document.getElementById('activity-log');
-
-        if (activityLog.length === 0) {
-          activityLogElement.innerHTML =
-            '<p class="text-center">No recent activity</p>';
-          return;
-        }
-
-        activityLogElement.innerHTML = '';
-
-        activityLog.forEach(activity => {
-          const activityItem = document.createElement('div');
-          activityItem.className = 'activity-item';
-          activityItem.innerHTML = `
-          <div class="activity-time">${activity.time}</div>
-          <div class="activity-description">
-            <i class="fas ${activity.icon} mr-2"></i>
-            ${activity.description}
-          </div>
-        `;
-          activityLogElement.appendChild(activityItem);
-        });
-      }
-
-      function startLearningMode(mode) {
-        // Store the selected mode
-        localStorage.setItem('learningMode', mode);
-
-        // Update stats
-        const sessions = parseInt(localStorage.getItem('sessions') || 0) + 1;
-        localStorage.setItem('sessions', sessions);
-
-        // Add to activity log
-        addActivity(mode);
-
-        // Redirect to chat
-        window.location = 'chat.html';
-      }
-
-      function addActivity(mode) {
-        const activityLog =
-          JSON.parse(localStorage.getItem('activityLog')) || [];
-
-        let icon, description;
-        switch (mode) {
-          case 'wrong-code':
-            icon = 'fa-bug';
-            description = 'Started a Wrong Code Analysis session';
-            break;
-          case 'correct-code':
-            icon = 'fa-check-circle';
-            description = 'Started a Correct Code Analysis session';
-            break;
-          default:
-            icon = 'fa-code';
-            description = 'Started a learning session';
-        }
-
-        const now = new Date();
-        const time = now.toLocaleTimeString() + ' ' + now.toLocaleDateString();
-
-        activityLog.unshift({
-          time,
-          icon,
-          description
-        });
-
-        // Keep only the last 10 activities
-        if (activityLog.length > 10) {
-          activityLog.pop();
-        }
-
-        localStorage.setItem('activityLog', JSON.stringify(activityLog));
-      }
-
-      function clearActivity() {
-        localStorage.removeItem('activityLog');
-        document.getElementById('activity-log').innerHTML =
-          '<p class="text-center">No recent activity</p>';
-      }
-
-      function logout() {
-        localStorage.removeItem('username');
-        window.location = 'login.html';
-      }
-    </script>
+    <script src="js/dashboard.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "name": "decentralized-tutor-app",
+  "name": "autonomous-tutor-app",
   "version": "1.0.0",
   "description": "AI Powered Coding Learning Assistant",
   "main": "server.js",

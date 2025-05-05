@@ -1,157 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Decentralized Tutor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
-    <div class="row w-100 justify-content-center">
-      <div class="col-md-5">
-        <div class="cyber-card">
-          <div class="card-header text-center">
-            <h2 class="neon-text mb-0">Register</h2>
-          </div>
-          <div class="card-body">
-            <form class="cyber-form">
-              <div class="form-group">
-                <label for="username"><i class="fas fa-user mr-2"></i>Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Choose a username">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Autonomous Tutor</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div
+      class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+    >
+      <div class="row w-100 justify-content-center">
+        <div class="col-md-5">
+          <div class="cyber-card">
+            <div class="card-header text-center">
+              <h2 class="neon-text mb-0">Register</h2>
+            </div>
+            <div class="card-body">
+              <form class="cyber-form">
+                <div class="form-group">
+                  <label for="username"
+                    ><i class="fas fa-user mr-2"></i>Username</label
+                  >
+                  <input
+                    type="text"
+                    id="username"
+                    class="form-control"
+                    placeholder="Choose a username"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password"
+                    ><i class="fas fa-lock mr-2"></i>Password</label
+                  >
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Choose a password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="confirm-password"
+                    ><i class="fas fa-check-circle mr-2"></i>Confirm
+                    Password</label
+                  >
+                  <input
+                    type="password"
+                    id="confirm-password"
+                    class="form-control"
+                    placeholder="Confirm your password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="language"
+                    ><i class="fas fa-code mr-2"></i>Preferred Programming
+                    Language</label
+                  >
+                  <select id="language" class="form-control">
+                    <option value="Python">Python</option>
+                    <option value="Java">Java</option>
+                    <option value="C#">C#</option>
+                    <option value="C++">C++</option>
+                  </select>
+                </div>
+                <div class="text-center mt-4">
+                  <button
+                    type="button"
+                    onclick="register()"
+                    class="cyber-btn w-100"
+                  >
+                    <i class="fas fa-user-plus mr-2"></i>Register
+                  </button>
+                </div>
+              </form>
+              <div class="text-center mt-3">
+                <p>
+                  Already have an account?
+                  <a href="login.html" class="neon-text">Login here</a>
+                </p>
               </div>
-              <div class="form-group">
-                <label for="password"><i class="fas fa-lock mr-2"></i>Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Choose a password">
-              </div>
-              <div class="form-group">
-                <label for="confirm-password"><i class="fas fa-check-circle mr-2"></i>Confirm Password</label>
-                <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password">
-              </div>
-              <div class="form-group">
-                <label for="language"><i class="fas fa-code mr-2"></i>Preferred Programming Language</label>
-                <select id="language" class="form-control">
-                  <option value="Python">Python</option>
-                  <option value="Java">Java</option>
-                  <option value="C#">C#</option>
-                  <option value="C++">C++</option>
-                </select>
-              </div>
-              <div class="text-center mt-4">
-                <button type="button" onclick="register()" class="cyber-btn w-100">
-                  <i class="fas fa-user-plus mr-2"></i>Register
-                </button>
-              </div>
-            </form>
-            <div class="text-center mt-3">
-              <p>Already have an account? <a href="login.html" class="neon-text">Login here</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Animated background -->
-  <div id="particles-js"></div>
+    <!-- Animated background -->
+    <div id="particles-js"></div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script src="js/app.js"></script>
-  <script>
-    function register() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      const language = document.getElementById('language').value;
-      
-      if (!username || !password || !confirmPassword) {
-        showNotification('Please fill in all fields', 'error');
-        return;
-      }
-      
-      if (password !== confirmPassword) {
-        showNotification('Passwords do not match', 'error');
-        return;
-      }
-
-      // Store language preference
-      localStorage.setItem('selectedLanguage', language);
-
-      // Show loading animation
-      showLoading();
-      
-      fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      })
-      .then(res => res.json())
-      .then(data => {
-        hideLoading();
-        if (data.message.includes('successfully')) {
-          showNotification('Registration successful! Redirecting to login...', 'success');
-          setTimeout(() => {
-            window.location = 'login.html';
-          }, 1500);
-        } else {
-          showNotification(data.message, 'error');
-        }
-      })
-      .catch(err => {
-        hideLoading();
-        showNotification('An error occurred. Please try again.', 'error');
-      });
-    }
-
-    function showNotification(message, type) {
-      // Create notification element
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.innerHTML = `
-        <div class="notification-content">
-          <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-          <span>${message}</span>
-        </div>
-      `;
-      
-      document.body.appendChild(notification);
-      
-      // Show notification
-      setTimeout(() => {
-        notification.classList.add('show');
-      }, 100);
-      
-      // Hide and remove notification
-      setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-          document.body.removeChild(notification);
-        }, 300);
-      }, 3000);
-    }
-
-    function showLoading() {
-      const loadingOverlay = document.createElement('div');
-      loadingOverlay.className = 'loading-overlay';
-      loadingOverlay.innerHTML = `
-        <div class="loading-spinner">
-          <div class="spinner"></div>
-        </div>
-      `;
-      document.body.appendChild(loadingOverlay);
-    }
-
-    function hideLoading() {
-      const loadingOverlay = document.querySelector('.loading-overlay');
-      if (loadingOverlay) {
-        document.body.removeChild(loadingOverlay);
-      }
-    }
-  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/register.js"></script>
+  </body>
 </html>

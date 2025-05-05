@@ -1,59 +1,33 @@
-const chatContainer = document.getElementById('chat');
-const inputField = document.getElementById('inputMessage');
-const sendButton = document.getElementById('sendButton');
-const modeSelector = document.getElementById('modeSelector');
+// Common utility functions for the application
 
-let username =
-  localStorage.getItem('username') || prompt('Enter your username:');
-localStorage.setItem('username', username);
-
-function createMessageElement(text, sender = 'bot') {
-  const messageEl = document.createElement('div');
-  messageEl.classList.add('message', sender);
-  messageEl.innerHTML = text;
-  chatContainer.appendChild(messageEl);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+// Check if a user is logged in and redirect if not
+function checkAuth() {
+  const username = localStorage.getItem('username');
+  if (!username) {
+    window.location = 'login.html';
+    return false;
+  }
+  return true;
 }
 
-function sendMessage() {
-  const message = inputField.value.trim();
-  if (!message) return;
-
-  createMessageElement(message, 'user');
-  inputField.value = '';
-
-  fetch('/api/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      username,
-      message,
-      mode: modeSelector.value
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.type === 'multiple-choice') {
-        let formattedOptions = data.options
-          .map((opt, index) => {
-            const letter = String.fromCharCode(97 + index); // a,b,c,d
-            return `(${letter}) ${opt}`;
-          })
-          .join('\n');
-
-        const combined = `<strong>${data.question}</strong>\n\n<pre>${formattedOptions}</pre>`;
-        createMessageElement(combined, 'bot');
-      } else {
-        createMessageElement(data.response, 'bot');
-      }
-    })
-    .catch(() => {
-      createMessageElement('❌ Error contacting server.', 'bot');
-    });
+// Get the current user's selected programming language
+function getSelectedLanguage() {
+  return localStorage.getItem('selectedLanguage') || 'Python';
 }
 
-sendButton.addEventListener('click', sendMessage);
+// Format date/time consistently across the application
+function formatDateTime(date) {
+  return date.toLocaleTimeString() + ' ' + date.toLocaleDateString();
+}
 
-inputField.addEventListener('keypress', e => {
-  if (e.key === 'Enter') sendMessage();
-});
+// Common fetch wrapper with error handling
+async function fetchWithErrorHandling(url, options) {
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error('API Error:', err);
+    throw new Error('An error occurred while connecting to the server.');
+  }
+}
