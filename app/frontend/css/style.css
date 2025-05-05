@@ -738,13 +738,19 @@ body {
 }
 
 /* Language selector styling */
-.language-selector select {
+.language-selector select,
+select.form-control {
   background-color: var(--light-bg);
   border: 1px solid var(--primary-color);
   border-radius: 5px;
   color: var(--text-color);
   font-size: 0.9rem;
-  padding: 8px 30px 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 4px 35px 4px 15px;
+  height: auto;
+  min-height: 45px;
+  line-height: 1.5;
   appearance: none;
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300c2ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
