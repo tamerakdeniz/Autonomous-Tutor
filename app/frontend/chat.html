@@ -1,115 +1,251 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>AI Tutor Chat</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  </head>
-  <body class="d-flex flex-column vh-100">
-    <nav class="navbar navbar-light bg-light">
-      <span class="navbar-brand mb-0 h1">Decentralized Tutor</span>
-    </nav>
-
-    <div id="chat" class="flex-grow-1 overflow-auto p-3"></div>
-
-    <div class="input-area p-3 bg-white">
-      <div class="input-group">
-        <input
-          type="text"
-          id="message"
-          class="form-control"
-          placeholder="Type your message..."
-        />
-        <div class="input-group-append">
-          <button onclick="sendMessage()" class="btn btn-primary">Send</button>
-        </div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tutor Chat - Decentralized Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="d-flex flex-column vh-100">
+  <nav class="navbar cyber-navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand neon-text" href="dashboard.html">Decentralized Tutor</a>
+      <div class="d-flex align-items-center">
+        <span id="mode-indicator" class="mr-3"></span>
+        <button class="cyber-btn cyber-btn-alt" onclick="window.location='dashboard.html'">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+        </button>
       </div>
     </div>
+  </nav>
 
-    <script>
-      function createMessageBubble(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', sender);
+  <div id="chat" class="flex-grow-1 overflow-auto p-3"></div>
 
-        if (sender === 'bot') {
-          const html = marked.parse(text);
+  <div class="input-area p-3">
+    <div class="input-group">
+      <input type="text" id="message" class="form-control" placeholder="Type your message...">
+      <div class="input-group-append">
+        <button onclick="sendMessage()" class="cyber-btn">
+          <i class="fas fa-paper-plane mr-2"></i>Send
+        </button>
+      </div>
+    </div>
+  </div>
 
-          // Kod bloklarını sar ve kopyalama butonu ekle
-          const processed = html.replace(
-            /<pre(?:><code>)?([\s\S]*?)(?:<\/code>)?<\/pre>/g,
-            (match, codeContent) => {
-              const lines = codeContent
-                .split('\n')
-                .map(line => `<span>${line}</span>`)
-                .join('');
-              return `
-				 <div class="code-container">
-					  <button class="copy-button" onclick="copyCode(this)">Copy</button>
-					  <pre><code>${lines}</code></pre>
-				 </div>`;
-            }
-          );
-
-          messageDiv.innerHTML = processed;
-        } else {
-          messageDiv.innerText = text;
-        }
-
-        document.getElementById('chat').appendChild(messageDiv);
-        document.getElementById('chat').scrollTop =
-          document.getElementById('chat').scrollHeight;
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in
+      const username = localStorage.getItem('username');
+      if (!username) {
+        window.location = 'login.html';
+        return;
       }
-
-      function sendMessage() {
-        const username = localStorage.getItem('username');
-        const message = document.getElementById('message').value;
-
-        if (!message.trim()) return;
-
-        createMessageBubble(message, 'user');
-
-        fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, message })
+      
+      // Get learning mode
+      const learningMode = localStorage.getItem('learningMode') || 'general';
+      
+      // Set mode indicator
+      const modeIndicator = document.getElementById('mode-indicator');
+      let modeText, modeIcon;
+      
+      switch(learningMode) {
+        case 'wrong-code':
+          modeText = 'Wrong Code Analysis';
+          modeIcon = 'fa-bug';
+          break;
+        case 'correct-code':
+          modeText = 'Correct Code Analysis';
+          modeIcon = 'fa-check-circle';
+          break;
+        case 'multiple-choice':
+          modeText = 'Multiple Choice';
+          modeIcon = 'fa-question-circle';
+          break;
+        default:
+          modeText = 'General Chat';
+          modeIcon = 'fa-comments';
+      }
+      
+      modeIndicator.innerHTML = `<i class="fas ${modeIcon} mr-2"></i>${modeText}`;
+      
+      // Send initial message based on mode
+      sendInitialMessage(learningMode);
+    });
+    
+    function sendInitialMessage(mode) {
+      let initialMessage;
+      
+      switch(mode) {
+        case 'wrong-code':
+          initialMessage = "I'd like to practice finding and fixing errors in code. Can you give me a code snippet with bugs to analyze?";
+          break;
+        case 'correct-code':
+          initialMessage = "I want to understand why certain code works correctly. Can you provide a code example and explain the best practices it demonstrates?";
+          break;
+        case 'multiple-choice':
+          initialMessage = "I'd like to test my conceptual understanding with some multiple choice questions about programming concepts.";
+          break;
+        default:
+          initialMessage = "Hello! I'm here to learn programming. How can you help me today?";
+      }
+      
+      // Create user message bubble
+      createMessageBubble(initialMessage, 'user');
+      
+      // Show typing indicator
+      showTypingIndicator();
+      
+      // Send to API
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username: localStorage.getItem('username'), 
+          message: initialMessage,
+          mode: mode
         })
-          .then(res => res.json())
-          .then(data => {
-            createMessageBubble(data.response, 'bot');
-            document.getElementById('message').value = '';
-          });
-      }
-
-      function copyCode(button) {
-        const container = button.parentElement;
-        const code = container.querySelectorAll('code span');
-        const text = Array.from(code)
-          .map(span => span.innerText)
-          .join('\n');
-
-        navigator.clipboard.writeText(text).then(() => {
-          // Copied animasyonu
-          button.classList.add('copied');
-          container.classList.add('highlight');
-
-          setTimeout(() => {
-            button.classList.remove('copied');
-            container.classList.remove('highlight');
-          }, 2000);
-        });
-      }
-
-      const input = document.getElementById('message');
-      input.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          sendMessage();
-        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        // Hide typing indicator
+        hideTypingIndicator();
+        
+        // Create bot message bubble
+        createMessageBubble(data.response, 'bot');
+        
+        // Update problems count
+        const problems = parseInt(localStorage.getItem('problems') || 0) + 1;
+        localStorage.setItem('problems', problems);
+      })
+      .catch(err => {
+        hideTypingIndicator();
+        createMessageBubble("Sorry, there was an error connecting to the tutor. Please try again.", 'bot');
       });
-    </script>
-  </body>
+    }
+
+    function createMessageBubble(text, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', sender);
+
+      if (sender === 'bot') {
+        // Process markdown with marked
+        const html = marked.parse(text);
+
+        // Process code blocks and add copy button
+        const processed = html.replace(
+          /<pre(?:><code>)?([\s\S]*?)(?:<\/code>)?<\/pre>/g,
+          (match, codeContent) => {
+            const lines = codeContent
+              .split('\n')
+              .map(line => `<span>${line}</span>`)
+              .join('');
+            return `
+              <div class="code-container">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <pre><code>${lines}</code></pre>
+              </div>`;
+          }
+        );
+
+        messageDiv.innerHTML = processed;
+      } else {
+        messageDiv.innerText = text;
+      }
+
+      document.getElementById('chat').appendChild(messageDiv);
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+    }
+
+    function sendMessage() {
+      const username = localStorage.getItem('username');
+      const message = document.getElementById('message').value;
+      const mode = localStorage.getItem('learningMode') || 'general';
+
+      if (!message.trim()) return;
+
+      createMessageBubble(message, 'user');
+      document.getElementById('message').value = '';
+      
+      // Show typing indicator
+      showTypingIndicator();
+
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username, 
+          message,
+          mode
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        // Hide typing indicator
+        hideTypingIndicator();
+        
+        // Create bot message bubble
+        createMessageBubble(data.response, 'bot');
+      })
+      .catch(err => {
+        hideTypingIndicator();
+        createMessageBubble("Sorry, there was an error connecting to the tutor. Please try again.", 'bot');
+      });
+    }
+
+    function copyCode(button) {
+      const container = button.parentElement;
+      const code = container.querySelectorAll('code span');
+      const text = Array.from(code)
+        .map(span => span.innerText)
+        .join('\n');
+
+      navigator.clipboard.writeText(text).then(() => {
+        // Copied animation
+        button.classList.add('copied');
+        container.classList.add('highlight');
+
+        setTimeout(() => {
+          button.classList.remove('copied');
+          container.classList.remove('highlight');
+        }, 2000);
+      });
+    }
+    
+    function showTypingIndicator() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'typing-indicator';
+      typingDiv.id = 'typing-indicator';
+      typingDiv.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+      `;
+      document.getElementById('chat').appendChild(typingDiv);
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+    }
+    
+    function hideTypingIndicator() {
+      const typingIndicator = document.getElementById('typing-indicator');
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    const input = document.getElementById('message');
+    input.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
 </html>
