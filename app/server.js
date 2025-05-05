@@ -80,23 +80,33 @@ app.post('/api/chat', async (req, res) => {
     return res.status(401).json({ message: 'Unauthorized.' });
   }
 
+  if (!message || !mode) {
+    return res
+      .status(400)
+      .json({
+        message:
+          'Invalid chat request. Please select a mode and enter a message.'
+      });
+  }
+
   let systemPrompt = 'You are a helpful programming tutor.';
   if (mode === 'wrong-code') {
-    systemPrompt = 'Provide buggy code and explain issues.';
+    systemPrompt =
+      'You are a tutor who provides buggy code and explains the mistakes.';
   }
   if (mode === 'correct-code') {
-    systemPrompt = 'Provide correct code and explain it.';
+    systemPrompt =
+      'You are a tutor who provides correct code and explains why it works.';
   }
   if (mode === 'multiple-choice') {
     systemPrompt =
-      'Ask programming multiple-choice questions and explain answers.';
+      'You are a tutor who asks programming multiple-choice questions and explains the answers.';
   }
 
+  const mergedPrompt = `${systemPrompt}\n\nUser: ${message}`;
+
   const prompt = {
-    contents: [
-      { role: 'system', parts: [{ text: systemPrompt }] },
-      { role: 'user', parts: [{ text: message }] }
-    ]
+    contents: [{ role: 'user', parts: [{ text: mergedPrompt }] }]
   };
 
   try {
@@ -113,7 +123,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// Catch-all route (fix for Express 5.x wildcard issue)
+// Catch-all route (for SPA support and Express 5 compatibility)
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
