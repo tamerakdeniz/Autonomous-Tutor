@@ -6,29 +6,32 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
+  // Set selected UI language
+  const currentLang = getCurrentLanguage();
+  document.getElementById('ui-language').value = currentLang;
+
   // Get learning mode and selected language
   const learningMode = localStorage.getItem('learningMode') || 'general';
   const selectedLanguage = localStorage.getItem('selectedLanguage') || 'Python';
 
   // Set mode indicator
   const modeIndicator = document.getElementById('mode-indicator');
-  let modeText, modeIcon;
+  let modeIcon;
 
   switch (learningMode) {
     case 'wrong-code':
-      modeText = `Wrong Code Analysis (${selectedLanguage})`;
       modeIcon = 'fa-bug';
       break;
     case 'correct-code':
-      modeText = `Correct Code Analysis (${selectedLanguage})`;
       modeIcon = 'fa-check-circle';
       break;
     default:
-      modeText = 'General Chat';
       modeIcon = 'fa-comments';
   }
 
-  modeIndicator.innerHTML = `<i class="fas ${modeIcon} mr-2"></i>${modeText}`;
+  modeIndicator.innerHTML = `<i class="fas ${modeIcon} mr-2"></i>${translateText(
+    learningMode === 'wrong-code' ? 'wrongCodeAnalysis' : 'correctCodeAnalysis'
+  )} (${selectedLanguage})`;
 
   // Send initial message based on mode
   sendInitialMessage(learningMode);
@@ -36,21 +39,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function sendInitialMessage(mode) {
   const language = localStorage.getItem('selectedLanguage') || 'Python';
-  let initialMessage;
+  let initialMessageKey;
 
   switch (mode) {
     case 'wrong-code':
-      initialMessage = `I'd like to practice finding and fixing errors in ${language} code. Can you give me a code snippet with bugs to analyze?`;
+      initialMessageKey = 'wrongCodeInit';
       break;
     case 'correct-code':
-      initialMessage = `I want to understand why certain ${language} code works correctly. Can you provide a code example and explain the best practices it demonstrates?`;
+      initialMessageKey = 'correctCodeInit';
       break;
     default:
-      initialMessage =
-        "Hello! I'm here to learn programming. How can you help me today?";
+      initialMessageKey = 'generalInit';
   }
 
-  createMessageBubble(initialMessage, 'user');
+  const message = `${translateText(initialMessageKey)} (${language})`;
+  createMessageBubble(message, 'user');
   showTypingIndicator();
 
   fetch('/api/chat', {
@@ -58,7 +61,7 @@ function sendInitialMessage(mode) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       username: localStorage.getItem('username'),
-      message: initialMessage,
+      message: message,
       mode: mode,
       language: language
     })
@@ -72,10 +75,7 @@ function sendInitialMessage(mode) {
     })
     .catch(err => {
       hideTypingIndicator();
-      createMessageBubble(
-        'Sorry, there was an error connecting to the tutor. Please try again.',
-        'bot'
-      );
+      createMessageBubble(translateText('errorConnecting'), 'bot');
     });
 }
 
@@ -94,7 +94,9 @@ function createMessageBubble(text, sender) {
           .join('');
         return `
         <div class="code-container">
-          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+          <button class="copy-button" onclick="copyCode(this)">${translateText(
+            'copy'
+          )}</button>
           <pre><code>${lines}</code></pre>
         </div>`;
       }
@@ -106,7 +108,7 @@ function createMessageBubble(text, sender) {
   }
 
   messageDiv.style.cursor = 'pointer';
-  messageDiv.title = 'Click to copy this message';
+  messageDiv.title = translateText('clickToCopy');
   messageDiv.addEventListener('click', function () {
     const input = document.getElementById('message');
     input.value = text;
@@ -148,10 +150,7 @@ function sendMessage() {
     })
     .catch(err => {
       hideTypingIndicator();
-      createMessageBubble(
-        'Sorry, there was an error connecting to the tutor. Please try again.',
-        'bot'
-      );
+      createMessageBubble(translateText('errorConnecting'), 'bot');
     });
 }
 

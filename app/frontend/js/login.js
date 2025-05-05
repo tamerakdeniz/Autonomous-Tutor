@@ -1,7 +1,7 @@
-function showFeedback(message, type) {
+function showFeedback(messageKey, type) {
   const feedbackDiv = document.getElementById('feedback-message');
   feedbackDiv.className = `alert alert-${type} text-center`;
-  feedbackDiv.textContent = message;
+  feedbackDiv.textContent = translateText(messageKey);
   feedbackDiv.classList.remove('d-none');
 }
 
@@ -14,7 +14,7 @@ function login(event) {
   const password = document.getElementById('password').value;
 
   if (!username || !password) {
-    showFeedback('Please enter both username and password', 'danger');
+    showFeedback('fillAllFields', 'danger');
     return;
   }
 
@@ -26,16 +26,16 @@ function login(event) {
     .then(res => res.json())
     .then(data => {
       if (data.message.includes('successful')) {
-        showFeedback('Login successful! Redirecting...', 'success');
+        showFeedback('loginSuccess', 'success');
         localStorage.setItem('username', username);
         setTimeout(() => {
           window.location = 'dashboard.html';
         }, 1500);
       } else {
-        showFeedback(data.message, 'danger');
+        showFeedback('errorOccurred', 'danger');
       }
     })
     .catch(err => {
-      showFeedback('An error occurred. Please try again.', 'danger');
+      showFeedback('errorOccurred', 'danger');
     });
 }

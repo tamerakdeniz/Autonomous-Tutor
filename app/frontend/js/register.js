@@ -1,4 +1,10 @@
-function showNotification(message, type) {
+// Initialize language selector on page load
+document.addEventListener('DOMContentLoaded', function () {
+  const currentLang = getCurrentLanguage();
+  document.getElementById('ui-language').value = currentLang;
+});
+
+function showNotification(messageKey, type) {
   const notification = document.createElement('div');
   notification.className = `notification ${type}`;
   notification.innerHTML = `
@@ -6,7 +12,7 @@ function showNotification(message, type) {
       <i class="fas ${
         type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'
       }"></i>
-      <span>${message}</span>
+      <span>${translateText(messageKey)}</span>
     </div>
   `;
 
@@ -49,12 +55,12 @@ function register() {
   const language = document.getElementById('language').value;
 
   if (!username || !password || !confirmPassword) {
-    showNotification('Please fill in all fields', 'error');
+    showNotification('fillAllFields', 'error');
     return;
   }
 
   if (password !== confirmPassword) {
-    showNotification('Passwords do not match', 'error');
+    showNotification('passwordsNoMatch', 'error');
     return;
   }
 
@@ -70,19 +76,16 @@ function register() {
     .then(data => {
       hideLoading();
       if (data.message.includes('successfully')) {
-        showNotification(
-          'Registration successful! Redirecting to login...',
-          'success'
-        );
+        showNotification('regSuccess', 'success');
         setTimeout(() => {
           window.location = 'login.html';
         }, 1500);
       } else {
-        showNotification(data.message, 'error');
+        showNotification('errorOccurred', 'error');
       }
     })
     .catch(err => {
       hideLoading();
-      showNotification('An error occurred. Please try again.', 'error');
+      showNotification('errorOccurred', 'error');
     });
 }

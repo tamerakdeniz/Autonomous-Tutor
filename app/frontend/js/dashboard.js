@@ -5,9 +5,15 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  document.getElementById(
-    'username-display'
-  ).textContent = `Welcome, ${username}!`;
+  document.getElementById('username-display').innerHTML = `${translateText(
+    'welcome'
+  )}, ${username}!`;
+
+  // Set selected UI language
+  const currentLang = getCurrentLanguage();
+  document.getElementById('ui-language').value = currentLang;
+
+  // Set selected programming language
   const selectedLang = localStorage.getItem('selectedLanguage') || 'Python';
   document.getElementById('language-select').value = selectedLang;
 
@@ -33,8 +39,9 @@ function loadActivityLog() {
   const activityLogElement = document.getElementById('activity-log');
 
   if (activityLog.length === 0) {
-    activityLogElement.innerHTML =
-      '<p class="text-center">No recent activity</p>';
+    activityLogElement.innerHTML = `<p class="text-center">${translateText(
+      'noActivity'
+    )}</p>`;
     return;
   }
 
@@ -46,7 +53,7 @@ function loadActivityLog() {
       <div class="activity-time">${activity.time}</div>
       <div class="activity-description">
         <i class="fas ${activity.icon} mr-2"></i>
-        ${activity.description}
+        ${translateText(activity.descriptionKey)}
       </div>
     `;
     activityLogElement.appendChild(activityItem);
@@ -64,25 +71,25 @@ function startLearningMode(mode) {
 function addActivity(mode) {
   const activityLog = JSON.parse(localStorage.getItem('activityLog')) || [];
 
-  let icon, description;
+  let icon, descriptionKey;
   switch (mode) {
     case 'wrong-code':
       icon = 'fa-bug';
-      description = 'Started a Wrong Code Analysis session';
+      descriptionKey = 'wrongCodeAnalysis';
       break;
     case 'correct-code':
       icon = 'fa-check-circle';
-      description = 'Started a Correct Code Analysis session';
+      descriptionKey = 'correctCodeAnalysis';
       break;
     default:
       icon = 'fa-code';
-      description = 'Started a learning session';
+      descriptionKey = 'learningSession';
   }
 
   const now = new Date();
-  const time = now.toLocaleTimeString() + ' ' + now.toLocaleDateString();
+  const time = formatDateTime(now);
 
-  activityLog.unshift({ time, icon, description });
+  activityLog.unshift({ time, icon, descriptionKey });
   if (activityLog.length > 10) {
     activityLog.pop();
   }
@@ -92,8 +99,9 @@ function addActivity(mode) {
 
 function clearActivity() {
   localStorage.removeItem('activityLog');
-  document.getElementById('activity-log').innerHTML =
-    '<p class="text-center">No recent activity</p>';
+  document.getElementById(
+    'activity-log'
+  ).innerHTML = `<p class="text-center">${translateText('noActivity')}</p>`;
 }
 
 function logout() {

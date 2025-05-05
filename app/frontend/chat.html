@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Tutor Chat - Autonomous Tutor</title>
+    <title data-translate="appName">Autonomous Tutor</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
@@ -26,16 +27,30 @@
   <body class="d-flex flex-column vh-100">
     <nav class="navbar cyber-navbar">
       <div class="container-fluid">
-        <a class="navbar-brand neon-text" href="dashboard.html"
+        <a
+          class="navbar-brand neon-text"
+          href="dashboard.html"
+          data-translate="appName"
           >Autonomous Tutor</a
         >
         <div class="d-flex align-items-center">
+          <div class="language-selector mr-3">
+            <select
+              id="ui-language"
+              class="form-control"
+              onchange="setLanguage(this.value)"
+            >
+              <option value="en">English</option>
+              <option value="tr">Türkçe</option>
+            </select>
+          </div>
           <span id="mode-indicator" class="mr-3"></span>
           <button
             class="cyber-btn cyber-btn-alt"
             onclick="window.location='dashboard.html'"
           >
-            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+            <i class="fas fa-arrow-left mr-2"></i
+            ><span data-translate="backToDashboard">Back to Dashboard</span>
           </button>
         </div>
       </div>
@@ -49,6 +64,7 @@
           type="text"
           id="message"
           class="form-control cyber-form"
+          data-translate="typeMessage"
           placeholder="Type your message..."
           style="height: 46px"
         />
@@ -58,15 +74,17 @@
             class="cyber-btn"
             style="margin: 0; height: 46px"
           >
-            <i class="fas fa-paper-plane mr-2"></i>Send
+            <i class="fas fa-paper-plane mr-2"></i
+            ><span data-translate="send">Send</span>
           </button>
         </div>
       </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/translations.js"></script>
     <script src="js/app.js"></script>
     <script src="js/chat.js"></script>
   </body>
