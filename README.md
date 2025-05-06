@@ -4,7 +4,6 @@ You can try the live version of the application here:
 
 👉 [autonomoustutor.wxcodesign.com](https://autonomoustutor.wxcodesign.com/) 🚀
 
-
 # 🤖 Autonomous Tutor
 
 An AI-powered learning platform designed to help beginner and intermediate programmers improve their coding and analysis skills.
@@ -223,3 +222,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Bootstrap for responsive design
 - Font Awesome for icons
 - Particles.js for background animations
+
+## 🎥 Demo Video
+
+[![Watch the video](https://img.youtube.com/vi/GpSb1G9hlx0/maxresdefault.jpg)](https://youtu.be/GpSb1G9hlx0)
