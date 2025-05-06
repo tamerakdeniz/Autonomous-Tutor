@@ -2,7 +2,7 @@
 
 You can try the live version of the application here:
 
-👉 [https://autonomoustutor.wxcodesign.com/](autonomoustutor.wxcodesign.com)
+👉 [autonomoustutor.wxcodesign.com](https://autonomoustutor.wxcodesign.com/)
 
 
 # 🤖 Autonomous Tutor
