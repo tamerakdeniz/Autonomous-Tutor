@@ -1,7 +1,9 @@
 ## Live Demo
 
-You can try the live version of the application here: <br>
-🚀 <a href="https://autonomoustutor.wxcodesign.com/" target="_blank">autonomoustutor.wxcodesign.com</a>
+You can try the live version of the application here:
+
+👉 [autonomoustutor.wxcodesign.com](https://autonomoustutor.wxcodesign.com/) 🚀
+
 
 # 🤖 Autonomous Tutor
 
