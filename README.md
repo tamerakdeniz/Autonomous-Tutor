@@ -1,3 +1,10 @@
+## Live Demo
+
+You can try the live version of the application here:
+
+👉 [https://autonomoustutor.wxcodesign.com/](https://autonomoustutor.wxcodesign.com/)
+
+
 # 🤖 Autonomous Tutor
 
 An AI-powered learning platform designed to help beginner and intermediate programmers improve their coding and analysis skills.
